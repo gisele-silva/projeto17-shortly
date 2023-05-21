@@ -7,6 +7,6 @@ import { signInValidate, signUpValidate } from "../middlewares/auth.middleware.j
 const authRouter = Router()
 
 authRouter.post("/signup", validateSchema(cadastroSchema), signUpValidate , signUp)
-authRouter.post("/signin", validateSchema(loginSchema), signInValidate,signIn)
+authRouter.post("/signin", validateSchema(loginSchema), signInValidate, signIn)
 
 export default authRouter
