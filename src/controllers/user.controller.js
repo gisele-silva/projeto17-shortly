@@ -5,21 +5,21 @@ export async function userMe (req, res){
 
     try {
         const visitCount = await db.query(`SELECT SUM(shorts.visit) FROM shorts WHERE "userId" = $1;`, [user.rows[0].id]);
-        const visitSum = visitCount.rows[0];
+        const visitSum = visitCount.rows[0].sum;
         const url = await db.query(`SELECT * FROM shorts WHERE "userId" = $1;`, [user.rows[0].id]) 
         const shortenedUrls = url.rows.map((row) => {
             return {
                 id: row.id,
                 shortUrl: row.shortUrl,
                 url: row.url,
-                visitCount: row.visitCount 
+                visitCount: row.visit
             }
         })
 
         res.send({
             id: user.rows[0].id,
             name: user.rows[0].name,
-            visitCount: visitSum.sum,
+            visitCount: visitSum,
             shortenedUrls
         })
     } catch (error) {
