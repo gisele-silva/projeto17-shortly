@@ -62,6 +62,7 @@ CREATE TABLE public.shorts (
     url text NOT NULL,
     "shortUrl" text NOT NULL,
     "userId" integer NOT NULL,
+    visit integer DEFAULT 0 NOT NULL,
     "createdAt" timestamp without time zone DEFAULT now() NOT NULL
 );
 
@@ -144,6 +145,8 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 -- Data for Name: sessions; Type: TABLE DATA; Schema: public; Owner: -
 --
 
+INSERT INTO public.sessions VALUES (6, '896c65d2-104b-43a8-b07d-f3821b17ac90', true, 2, '2023-05-21 17:27:36.237879');
+INSERT INTO public.sessions VALUES (7, '7e75107f-6bdc-45d4-9684-e419232cb207', true, 2, '2023-05-21 18:20:48.436212');
 
 
 --
@@ -156,13 +159,15 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: -
 --
 
+INSERT INTO public.users VALUES (1, 'gisele', 'gi@gmail.com', '123455', '2023-05-21 08:28:01.414263');
+INSERT INTO public.users VALUES (2, 'João', 'joao@driven.com.br', '$2b$10$76yLDB.OO4KO0da.ISLqCeOlnJzyVCrmA7euzKP.w9FGQujsNWFpi', '2023-05-21 08:31:16.491163');
 
 
 --
 -- Name: sessions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.sessions_id_seq', 1, false);
+SELECT pg_catalog.setval('public.sessions_id_seq', 7, true);
 
 
 --
@@ -176,7 +181,7 @@ SELECT pg_catalog.setval('public.shorts_id_seq', 1, false);
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.users_id_seq', 1, false);
+SELECT pg_catalog.setval('public.users_id_seq', 2, true);
 
 
 --

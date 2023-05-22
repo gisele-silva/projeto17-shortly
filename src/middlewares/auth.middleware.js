@@ -8,10 +8,13 @@ export async function authValidation(req, res, next){
     
     try {
        
-        const session = await db.query(`SELECT * FROM session WHERE token = $1`, [token])
-        if (!session) return res.status(401).send("Token inválido")
+        const session = await db.query(`SELECT * FROM sessions WHERE token = $1`, [token])
+        if (!session.rows[0]) return res.status(401).send("Token inválido")
         
-        res.locals.session = session
+        const user = await db.query(`SELECT * FROM users WHERE id = $1`, [session.rows[0].userId])
+        if (!user.rows[0]) return res.status(404).send("Usuário não encontrado")
+
+        res.locals.user = user
         
         next()
     } catch (error) {
@@ -49,7 +52,7 @@ export async function signInValidate(req, res, next){
         res.locals.userExist = userExist
         
         next();
-        
+
     } catch (error) {
         return res.status(500).send("deu ero")
     }
