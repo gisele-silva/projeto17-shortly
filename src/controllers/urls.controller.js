@@ -11,11 +11,13 @@ export async function shortUrlPost (req, res){
 
     try {
         const result = await db.query(
-            `INSERT INTO shorts (url, "shortUrl", "userId") VALUES ($1, $2, $3) RETURNING id`
-            , [url, shortUrl, userId])
-      
+            `INSERT INTO shorts (url, "shortUrl", "userId") 
+            VALUES ($1, $2, $3) 
+            RETURNING id`, 
+            [url, shortUrl, userId])
       
           res.status(201).send({ id: result.rows[0].id, shortUrl: shortUrl})
+          
     } catch (error) {
         return res.status(500).send(error.message)
     }
@@ -56,8 +58,7 @@ export async function urlDelete (req, res){
     try {
         const resultId = await db.query(`SELECT * FROM shorts WHERE id = $1;`, [id])
         if (resultId.rowCount === 0) return res.sendStatus(404)
-        console.log("userId: ", resultId.rows[0].userId)
-        console.log("id: ", user.rows[0].id) 
+      
         if (resultId.rows[0].userId !== user.rows[0].id) return res.sendStatus(401)
 
         await db.query(`DELETE FROM shorts WHERE id = $1`, [id])
