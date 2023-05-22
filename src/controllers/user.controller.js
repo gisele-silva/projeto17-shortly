@@ -33,11 +33,11 @@ export async function ranking (req, res){
         const ranking = await db.query(`
         SELECT users.id, users.name, 
         COUNT(shorts.id) as "linksCount",
-        COALESCE(SUM(shorts.visit), 0) as visitCount
+        COALESCE(SUM(shorts.visit), 0) as "visitCount"
         FROM users
         LEFT JOIN shorts ON shorts."userId" = users.id
         GROUP BY users.id
-        ORDER BY visitCount DESC
+        ORDER BY "visitCount" DESC
         LIMIT 10
         `)
 
